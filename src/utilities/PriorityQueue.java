@@ -1,24 +1,18 @@
+package utilities;
 
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author mohan
+ * @author Mohan Varma
  */
 public class PriorityQueue {
 
-    // ArrayList of values representing the pq
-    private ArrayList<Integer> pq;
+    // ArrayList of MazeNodes representing the pq
+    private ArrayList<MazeNode> pq;
     
     public PriorityQueue()
     {
-         pq = new ArrayList<Integer>();
+         pq = new ArrayList<MazeNode>();
     }
     
     public int getSize()
@@ -28,7 +22,9 @@ public class PriorityQueue {
     
     private boolean isGreater(int i, int j)
     {
-        return (pq.get(i) > pq.get(j));
+        int fi = pq.get(i).getG() + pq.get(i).getH();
+        int fj = pq.get(j).getG() + pq.get(j).getH();
+        return fi > fj;
     }
     
     private void swap(int i, int j)
@@ -37,7 +33,7 @@ public class PriorityQueue {
         if(i > (pq.size()-1) || j > (pq.size()-1))
             return;
         
-        int tmp = pq.get(i);
+        MazeNode tmp = pq.get(i);
         pq.set(i, pq.get(j));
         pq.set(j, tmp);
     }
@@ -46,53 +42,52 @@ public class PriorityQueue {
     // in bottom Up way
     private void bottomUpMinHeapify(int index)
     {
-        int k = index;
-        while(k > 0 && isGreater((k-1)/2, k))
+        while(index > 0 && isGreater((index-1)/2, index))
         {
             // Swap index with parent
-            swap(k, (k-1)/2);
+            swap(index, (index-1)/2);
             // Repeatedly check at parent
-            k = (k-1)/2;
+            index = (index-1)/2;
         }
     }
     
     // Starting at parent, 
     private void topDownMinHeapify(int index)
     {
-        int k = index;
-        while((2*k+1) <= pq.size()-1)
+        while((2*index+1) <= pq.size()-1)
         {
-            int j = (2*k+1);
-            if (j < (pq.size()-1) && isGreater(j, j+1))
+            int child = (2*index+1);
+            if (child < (pq.size()-1) && isGreater(child, child+1))
             {
                 //Exchange it with the lesser element
-                j = j+1;
+                child = child+1;
             }
-            
-            if (!isGreater(k, j))
+
+            // Right position
+            if (!isGreater(index, child))
                 break;
             
-            swap(k, j);
+            swap(index, child);
             
-            k = j;
+            index = child;
         }
     }
     
-    public void insert(int x)
+    public void insert(MazeNode node)
     {
         // Add at the end
-        pq.add(x);
+        pq.add(node);
         
         //Bottom up minHeapify
         bottomUpMinHeapify(pq.size()-1);
     }
     
     // Deletes min value and retains min PQ
-    public int deleteMin()
+    public MazeNode deleteMin()
     {
         if(!pq.isEmpty())
         {
-            int min = pq.get(0);   
+            MazeNode min = pq.get(0);
             //Exchange this with the last element
             swap(0, pq.size()-1);
             // Remove the last element
@@ -101,24 +96,55 @@ public class PriorityQueue {
             topDownMinHeapify(0);
             return min;
         }
-        return -1;
+        return null;
     }
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Tests
         PriorityQueue pq = new PriorityQueue();
-        pq.insert(10);
-        pq.insert(8);
-        pq.insert(7);
-        pq.insert(7);
-        pq.insert(6);
-        System.out.println(pq.deleteMin());
-        System.out.println(pq.deleteMin());
-        pq.insert(1);
-        System.out.println(pq.deleteMin());
+
+        MazeNode n10 = new MazeNode('.');
+        n10.setG(3);
+        n10.setH(7);
+        pq.insert(n10);
+
+        MazeNode n8 = new MazeNode('.');
+        n8.setG(4);
+        n8.setH(4);
+        pq.insert(n8);
+
+        MazeNode n7 = new MazeNode('.');
+        n7.setG(3);
+        n7.setH(4);
+        pq.insert(n7);
+
+        MazeNode n6 = new MazeNode('.');
+        n6.setG(3);
+        n6.setH(3);
+        pq.insert(n6);
+
+
+        MazeNode tmp = pq.deleteMin();
+        int g = tmp.getG();
+        int h = tmp.getH();
+        System.out.println(g + "+" + h);
+
+        MazeNode n1 = new MazeNode('.');
+        n1.setG(0);
+        n1.setH(1);
+        pq.insert(n1);
+
+        tmp = pq.deleteMin();
+        g = tmp.getG();
+        h = tmp.getH();
+        System.out.println(g + "+" + h);
+        tmp = pq.deleteMin();
+        g = tmp.getG();
+        h = tmp.getH();
+        System.out.println(g + "+" + h);
         System.out.println(pq.getSize());
     }
     
