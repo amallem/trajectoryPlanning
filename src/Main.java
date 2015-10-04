@@ -7,8 +7,8 @@ public class Main {
 
     public static void main(String args[]){
 
-        Maze a = new Maze(10, 10);
-
+        Maze a = new Maze(3, 3);
+        a.printMaze();
 
     }
 }

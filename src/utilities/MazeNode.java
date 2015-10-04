@@ -5,6 +5,9 @@ package utilities;
  */
 public class MazeNode {
 
+    public int row;
+    public int col;
+
     private char val;
     private int cost;
     private int g;
@@ -12,10 +15,13 @@ public class MazeNode {
     private MazeNode parent;
     private int search;
 
-    public MazeNode(char val) {
+    public MazeNode(char val, int row, int col) {
         this.val = val;
+        this.row = row;
+        this.col = col;
         this.cost = 1;
         this.parent = null;
+        this.search = 0;
     }
 
     public boolean isBlocked() {
