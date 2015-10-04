@@ -30,8 +30,8 @@ public class Maze {
     private void generate() {
         int pos_row = new Random().nextInt(rows);
         int pos_col = new Random().nextInt(cols);
-        int count = 0;
         Stack<MazeNode> child = new Stack<MazeNode>();
+        int count = 0;
         child.push(maze[pos_row][pos_col]);
         while (true) {
             MazeNode temp;
@@ -45,6 +45,9 @@ public class Maze {
                 }
                 addChildToStack(child, temp);
             }
+
+            if (count == rows * cols)
+                break;
 
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
@@ -62,15 +65,19 @@ public class Maze {
 
     private void addChildToStack(Stack<MazeNode> child, MazeNode temp) {
         if ((temp.row - 1 >= 0) && (maze[temp.row - 1][temp.col].getVal() == NOT_VISITED)) {
+            maze[temp.row - 1][temp.col].setVal(FREE);
             child.push(maze[temp.row - 1][temp.col]);
         }
         if ((temp.row + 1 < rows) && (maze[temp.row + 1][temp.col].getVal() == NOT_VISITED)) {
+            maze[temp.row + 1][temp.col].setVal(FREE);
             child.push(maze[temp.row + 1][temp.col]);
         }
         if ((temp.col - 1 >= 0) && (maze[temp.row][temp.col - 1].getVal() == NOT_VISITED)) {
+            maze[temp.row][temp.col - 1].setVal(FREE);
             child.push(maze[temp.row][temp.col - 1]);
         }
         if ((temp.col + 1 < cols) && (maze[temp.row][temp.col + 1].getVal() == NOT_VISITED)) {
+            maze[temp.row][temp.col + 1].setVal(FREE);
             child.push(maze[temp.row][temp.col + 1]);
         }
     }

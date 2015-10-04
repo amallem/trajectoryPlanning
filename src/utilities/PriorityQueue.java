@@ -106,22 +106,22 @@ public class PriorityQueue {
         // Tests
         PriorityQueue pq = new PriorityQueue();
 
-        MazeNode n10 = new MazeNode('.');
+        MazeNode n10 = new MazeNode('.', 1, 2);
         n10.setG(3);
         n10.setH(7);
         pq.insert(n10);
 
-        MazeNode n8 = new MazeNode('.');
+        MazeNode n8 = new MazeNode('.', 2, 3);
         n8.setG(4);
         n8.setH(4);
         pq.insert(n8);
 
-        MazeNode n7 = new MazeNode('.');
+        MazeNode n7 = new MazeNode('.', 3, 4);
         n7.setG(3);
         n7.setH(4);
         pq.insert(n7);
 
-        MazeNode n6 = new MazeNode('.');
+        MazeNode n6 = new MazeNode('.', 4, 5);
         n6.setG(3);
         n6.setH(3);
         pq.insert(n6);
@@ -132,7 +132,7 @@ public class PriorityQueue {
         int h = tmp.getH();
         System.out.println(g + "+" + h);
 
-        MazeNode n1 = new MazeNode('.');
+        MazeNode n1 = new MazeNode('.', 7, 6);
         n1.setG(0);
         n1.setH(1);
         pq.insert(n1);
