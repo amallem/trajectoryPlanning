@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * Created by anirudh on 10/3/15.
  */
-public class Maze {
+public class MazeBox {
 
     public static MazeNode[][] maze;
     private static final char BLOCKED = '#';
@@ -15,7 +15,7 @@ public class Maze {
     private int rows;
     private int cols;
 
-    public Maze(int row, int col) {
+    public MazeBox(int row, int col) {
         maze = new MazeNode[row][col];
         this.rows = row;
         this.cols = col;
@@ -105,10 +105,19 @@ public class Maze {
     public void printMaze() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                System.out.print(maze[i][j].getVal() + " ");
+                System.out.print(maze[i][j].getCost() + " ");
             }
             System.out.println();
         }
+    }
+
+    public MazeNode getNode(int row, int col) {
+
+        if (row < rows && row >= 0 &&
+                col < cols && col >= 0) {
+            return maze[row][col];
+        }
+        return null;
     }
 
 }

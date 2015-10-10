@@ -7,7 +7,9 @@ import java.util.ArrayList;
  */
 public class PriorityQueue {
 
-    // ArrayList of MazeNodes representing the pq
+    /**
+     * ArrayList of MazeNodes representing the pq
+     */
     private ArrayList<MazeNode> pq;
     
     public PriorityQueue()
@@ -19,7 +21,8 @@ public class PriorityQueue {
     {
         return pq.size();
     }
-    
+
+    /* TODO : Need to implement various logic to break ties */
     private boolean isGreater(int i, int j)
     {
         int fi = pq.get(i).getG() + pq.get(i).getH();
@@ -37,9 +40,9 @@ public class PriorityQueue {
         pq.set(i, pq.get(j));
         pq.set(j, tmp);
     }
-    
-    // Starting from the index x, retain minHeap
-    // in bottom Up way
+
+    /** Starting from the index x, retain minHeap
+     in bottom Up way */
     private void bottomUpMinHeapify(int index)
     {
         while(index > 0 && isGreater((index-1)/2, index))
@@ -50,8 +53,8 @@ public class PriorityQueue {
             index = (index-1)/2;
         }
     }
-    
-    // Starting at parent, 
+
+    /** Starting at parent, */
     private void topDownMinHeapify(int index)
     {
         while((2*index+1) <= pq.size()-1)
@@ -79,7 +82,7 @@ public class PriorityQueue {
         pq.add(node);
         
         //Bottom up minHeapify
-        bottomUpMinHeapify(pq.size()-1);
+        bottomUpMinHeapify(pq.size() - 1);
     }
     
     // Deletes min value and retains min PQ
@@ -108,22 +111,22 @@ public class PriorityQueue {
 
         MazeNode n10 = new MazeNode('.', 1, 2);
         n10.setG(3);
-        n10.setH(7);
+        n10.setH_temp(7);
         pq.insert(n10);
 
         MazeNode n8 = new MazeNode('.', 2, 3);
         n8.setG(4);
-        n8.setH(4);
+        n8.setH_temp(4);
         pq.insert(n8);
 
         MazeNode n7 = new MazeNode('.', 3, 4);
         n7.setG(3);
-        n7.setH(4);
+        n7.setH_temp(4);
         pq.insert(n7);
 
         MazeNode n6 = new MazeNode('.', 4, 5);
         n6.setG(3);
-        n6.setH(3);
+        n6.setH_temp(3);
         pq.insert(n6);
 
 
@@ -134,7 +137,7 @@ public class PriorityQueue {
 
         MazeNode n1 = new MazeNode('.', 7, 6);
         n1.setG(0);
-        n1.setH(1);
+        n1.setH_temp(1);
         pq.insert(n1);
 
         tmp = pq.deleteMin();
@@ -147,5 +150,10 @@ public class PriorityQueue {
         System.out.println(g + "+" + h);
         System.out.println(pq.getSize());
     }
-    
+
+    /* TODO : Should remove all items in openList */
+    public void clearAll() {
+
+    }
+
 }

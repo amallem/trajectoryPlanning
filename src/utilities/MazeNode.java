@@ -9,7 +9,14 @@ public class MazeNode {
     public int col;
 
     private char val;
+
+    /**
+     * Cost to reach this node from neighbour.
+     * c(s,a)
+     */
     private int cost;
+
+
     private int g;
     private int h;
     private MazeNode parent;
@@ -58,7 +65,12 @@ public class MazeNode {
         return this.h;
     }
 
-    public void setH(int h) {
+    public void setH(MazeNode goal) {
+        this.h = Math.abs(goal.row - this.row)
+                + Math.abs(goal.col - this.col);
+    }
+
+    public void setH_temp(int h) {
         this.h = h;
     }
 
