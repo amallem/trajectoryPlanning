@@ -1,3 +1,4 @@
+import Algos.RepeatedBackwardAStar;
 import Algos.RepeatedForwardAStar;
 import utilities.MazeBox;
 import utilities.MazeNode;
@@ -14,6 +15,14 @@ public class Main {
         MazeNode[][] m2 = b.getMaze();
         RepeatedForwardAStar.search(b, m2[0][0], m2[100][100]);
         b.printMaze();
+
+        MazeBox c = new MazeBox(101, 101);
+        MazeNode[][] m3 = b.getMaze();
+        RepeatedForwardAStar.search(c, m2[0][0], m2[100][100]);
+        c.printMaze();
+
+        RepeatedBackwardAStar.search(c, m3[100][100], m3[0][0]);
+        c.printMaze();
 
             /*
             RepeatedForwardAStar.search(a,maze[0][0],maze[9][9]);
