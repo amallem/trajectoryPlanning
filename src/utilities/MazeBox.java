@@ -86,9 +86,7 @@ public class MazeBox {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 maze[i][j] = new MazeNode('*', i, j);
-                System.out.print(maze[i][j].getVal() + " ");
             }
-            System.out.println();
         }
     }
 
@@ -105,7 +103,7 @@ public class MazeBox {
     public void printMaze() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                System.out.print(maze[i][j].getCost() + " ");
+                System.out.print(maze[i][j].getVal() + " ");
             }
             System.out.println();
         }

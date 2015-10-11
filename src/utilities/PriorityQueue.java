@@ -101,7 +101,34 @@ public class PriorityQueue {
         }
         return null;
     }
-    
+
+    /**
+     * @return the f-value of the min MazeNode
+     */
+    public int getMinFValue() {
+        return (pq.get(0).getG() + pq.get(0).getH());
+    }
+
+    /**
+     * @param node
+     * @return "True" if the priorityQueue contains the @param
+     * else returns "False"
+     */
+    public boolean contains(MazeNode node) {
+        return pq.contains(node);
+    }
+
+    /**
+     * @param node Deletes the given MazeNode from the priorityQueue
+     *             TODO : Check if this works!
+     */
+    public void remove(MazeNode node) {
+        int indx = pq.indexOf(node);
+        swap(indx, pq.size() - 1);
+        pq.remove(pq.size() - 1);
+        topDownMinHeapify(indx);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -151,9 +178,8 @@ public class PriorityQueue {
         System.out.println(pq.getSize());
     }
 
-    /* TODO : Should remove all items in openList */
-    public void clearAll() {
-
+    public void clear() {
+        pq.clear();
     }
 
 }

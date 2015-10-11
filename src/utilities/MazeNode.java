@@ -5,6 +5,7 @@ package utilities;
  */
 public class MazeNode {
 
+    private static final char BLOCKED = '#';
     public int row;
     public int col;
 
@@ -32,9 +33,9 @@ public class MazeNode {
     }
 
     public boolean isBlocked() {
-        if (val == '.')
-            return false;
-        return true;
+        if (val == BLOCKED)
+            return true;
+        return false;
     }
 
     public void setCost(int cost) {
