@@ -1,11 +1,13 @@
 package utilities;
 
+import static utilities.Constants.BLOCKED;
+
 /**
  * Created by anirudh on 10/3/15.
  */
 public class MazeNode {
 
-    private static final char BLOCKED = '#';
+
     public int row;
     public int col;
 

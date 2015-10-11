@@ -3,15 +3,16 @@ package utilities;
 import java.util.Random;
 import java.util.Stack;
 
+import static utilities.Constants.FREE;
+import static utilities.Constants.NOT_VISITED;
+import static utilities.Constants.BLOCKED;
+
 /**
  * Created by anirudh on 10/3/15.
  */
 public class MazeBox {
 
     public static MazeNode[][] maze;
-    private static final char BLOCKED = '#';
-    private static final char FREE = '.';
-    private static final char NOT_VISITED = '*';
     private int rows;
     private int cols;
 

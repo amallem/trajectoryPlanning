@@ -1,5 +1,8 @@
 package Algos;
 
+import static utilities.Constants.INFINITY;
+import static utilities.Constants.MOVE;
+
 import utilities.MazeBox;
 import utilities.MazeNode;
 import utilities.PriorityQueue;
@@ -15,8 +18,6 @@ import java.util.Stack;
 public class RepeatedForwardAStar {
 
     private static int counter = 0;
-    private static final char MOVE = '+';
-    private static final int INFINITY = 1000;
     private static MazeNode[][] maze;
     private static PriorityQueue openList = new PriorityQueue();
     private static List<MazeNode> closedList = new ArrayList<MazeNode>();
