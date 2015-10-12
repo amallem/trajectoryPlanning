@@ -45,20 +45,22 @@ public class AdaptiveAStar {
             goal.setG(INFINITY);
             goal.setSearch(counter);
             openList.clear();
-            closedList.clear();
+            //closedList.clear();
             start.setH(goal);
             openList.insert(start);
             computePath(goal);
-            int gGoal = goal.getG();
+            //int gGoal = goal.getG();
 
             if (openList.getSize() == 0) {
                 System.out.println("Cannot reach target!!!!");
                 return;
             }
+            /*
             for (MazeNode node : closedList) {
                 int hNew = gGoal - node.getG();
                 node.setH_temp(hNew);
             }
+            */
             retracePath(start, goal);
             start = moveAgent();
         }
@@ -120,10 +122,13 @@ public class AdaptiveAStar {
                     if (openList.contains(neighbour)) {
                         openList.remove(neighbour);
                     }
-                    neighbour.setH(goal);
-                    if (!closedList.contains(neighbour)) {
-                        openList.insert(neighbour);
+                    if (closedList.contains(neighbour)) {
+                        int hNew = goal.getG() - neighbour.getG();
+                        neighbour.setH_temp(hNew);
+                    } else {
+                        neighbour.setH(goal);
                     }
+                    openList.insert(neighbour);
                 }
             }
         }
