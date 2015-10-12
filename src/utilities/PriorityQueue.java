@@ -123,10 +123,10 @@ public class PriorityQueue {
      *             TODO : Check if this works!
      */
     public void remove(MazeNode node) {
-        int indx = pq.indexOf(node);
-        swap(indx, pq.size() - 1);
+        int index = pq.indexOf(node);
+        swap(index, pq.size() - 1);
         pq.remove(pq.size() - 1);
-        topDownMinHeapify(indx);
+        topDownMinHeapify(index);
     }
 
     /**
