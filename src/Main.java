@@ -1,10 +1,8 @@
+import Algos.AdaptiveAStar;
 import Algos.RepeatedBackwardAStar;
 import Algos.RepeatedForwardAStar;
-import utilities.Constants;
 import utilities.MazeBox;
 import utilities.MazeNode;
-
-import static utilities.Constants.FREE;
 
 /**
  * Created by anirudh on 10/3/15.
@@ -16,12 +14,18 @@ public class Main {
 
         MazeBox mBox = new MazeBox(11, 11);
         MazeNode[][] maze = mBox.getMaze();
+
         RepeatedForwardAStar.search(mBox, maze[0][0], maze[10][10]);
         mBox.printMaze();
 
         reinitialize(maze);
 
         RepeatedBackwardAStar.search(mBox, maze[0][0], maze[10][10]);
+        mBox.printMaze();
+
+        reinitialize(maze);
+
+        AdaptiveAStar.search(mBox, maze[0][0], maze[10][10]);
         mBox.printMaze();
 
         /*MazeBox c = new MazeBox(11, 11);
