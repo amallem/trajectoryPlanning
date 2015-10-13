@@ -1,6 +1,7 @@
 package utilities;
 
 import static utilities.Constants.BLOCKED;
+import static utilities.Constants.FREE;
 
 /**
  * Created by anirudh on 10/3/15.
@@ -91,5 +92,14 @@ public class MazeNode {
 
     public int getSearch() {
         return this.search;
+    }
+
+    public void reinitialize() {
+        if (!this.isBlocked()) {
+            this.setVal(FREE);
+        }
+        this.cost = 1;
+        this.parent = null;
+        this.search = 0;
     }
 }

@@ -112,9 +112,7 @@ public class RepeatedForwardAStar {
                         openList.remove(neighbour);
                     }
                     neighbour.setH(goal);
-                    if (!closedList.contains(neighbour)) {
-                        openList.insert(neighbour);
-                    }
+                    openList.insert(neighbour);
                 }
             }
         }
