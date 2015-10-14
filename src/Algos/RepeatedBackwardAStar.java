@@ -8,7 +8,10 @@ import utilities.MazeNode;
  */
 public class RepeatedBackwardAStar {
 
+    public static int exploredNodes = 0;
+
     public static void search(MazeBox mazeBox, MazeNode start, MazeNode goal) {
         RepeatedForwardAStar.search(mazeBox, goal, start);
+        exploredNodes = RepeatedForwardAStar.exploredNodes;
     }
 }

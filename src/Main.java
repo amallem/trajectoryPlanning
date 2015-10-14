@@ -4,6 +4,10 @@ import Algos.RepeatedForwardAStar;
 import utilities.MazeBox;
 import utilities.MazeNode;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by anirudh on 10/3/15.
  */
@@ -12,33 +16,43 @@ public class Main {
     public static void main(String args[]){
 
 
-        MazeBox mBox = new MazeBox(11, 11);
-        MazeNode[][] maze = mBox.getMaze();
+        try {
+            PrintWriter writer = new PrintWriter("Sample.txt", "UTF-8");
 
-        RepeatedForwardAStar.search(mBox, maze[0][0], maze[10][10]);
-        mBox.printMaze();
 
-        reinitialize(maze);
+            MazeBox mBox = new MazeBox(5);
+            MazeNode[][] maze = mBox.getMaze();
 
-        RepeatedBackwardAStar.search(mBox, maze[0][0], maze[10][10]);
-        mBox.printMaze();
+            writer.println("Performing Repeated Forward A-Star");
+            RepeatedForwardAStar.search(mBox, maze[4][2], maze[4][4]);
+            mBox.printMaze(writer);
+            writer.println("Explored Nodes: " + RepeatedForwardAStar.exploredNodes);
+            writer.print("--------------------------------");
+            writer.println();
 
-        reinitialize(maze);
+            reinitialize(maze);
 
-        AdaptiveAStar.search(mBox, maze[0][0], maze[10][10]);
-        mBox.printMaze();
+            writer.println("Performing Repeated Backward A-Star");
+            RepeatedBackwardAStar.search(mBox, maze[4][4], maze[4][2]);
+            mBox.printMaze(writer);
+            writer.println(" Explored Nodes : " + RepeatedBackwardAStar.exploredNodes);
 
-        /*MazeBox c = new MazeBox(11, 11);
-        MazeNode[][] m3 = mBox.getMaze();
-        RepeatedForwardAStar.search(c, maze[0][0], maze[10][10]);
-        c.printMaze();
+            writer.print("--------------------------------");
+            writer.println();
+            writer.flush();
 
-        RepeatedBackwardAStar.search(c, m3[10][10], m3[0][0]);
-        c.printMaze();*/
+            reinitialize(maze);
 
-            /*
-            RepeatedForwardAStar.search(a,maze[0][0],maze[9][9]);
-            a.printMaze();*/
+            writer.println("Performing Adaptive A-Star");
+            AdaptiveAStar.search(mBox, maze[4][2], maze[4][4]);
+            mBox.printMaze(writer);
+            writer.println(" Explored Nodes : " + AdaptiveAStar.exploredNodes);
+
+            writer.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

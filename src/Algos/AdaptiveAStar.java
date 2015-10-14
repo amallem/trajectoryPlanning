@@ -38,34 +38,39 @@ public class AdaptiveAStar {
         while (!start.equals(goal)) {
             counter++;
             System.out.println("-------------------------------------------------");
-            mazeBox.printMaze();
+            //mazeBox.printMaze();
             discoverNeighbours(start);
             start.setG(0);
             start.setSearch(counter);
             goal.setG(INFINITY);
             goal.setSearch(counter);
             openList.clear();
-            //closedList.clear();
+            closedList.clear();
             start.setH(goal);
             openList.insert(start);
             computePath(goal);
-            //int gGoal = goal.getG();
 
             if (openList.getSize() == 0) {
                 System.out.println("Cannot reach target!!!!");
                 return;
             }
-            /*
-            for (MazeNode node : closedList) {
-                int hNew = gGoal - node.getG();
-                node.setH_temp(hNew);
-            }
-            */
             retracePath(start, goal);
             start = moveAgent();
+            updateHnew(goal);
         }
 
         System.out.println("Reached Target!");
+    }
+
+    private static void updateHnew(MazeNode goal) {
+        for (MazeNode node : closedList) {
+            node.setHnew(goal.getG() - node.getG());
+            node.setVisited(true);
+        }
+        for (MazeNode node : openList.getAllNodes()) {
+            node.setHnew(goal.getG() - node.getG());
+            node.setVisited(true);
+        }
     }
 
     private static void discoverNeighbours(MazeNode start) {
@@ -122,10 +127,7 @@ public class AdaptiveAStar {
                     if (openList.contains(neighbour)) {
                         openList.remove(neighbour);
                     }
-                    if (closedList.contains(neighbour)) {
-                        int hNew = goal.getG() - neighbour.getG();
-                        neighbour.setH_temp(hNew);
-                    } else {
+                    if (!neighbour.isVisited()) {
                         neighbour.setH(goal);
                     }
                     openList.insert(neighbour);

@@ -22,12 +22,21 @@ public class PriorityQueue {
         return pq.size();
     }
 
+    public ArrayList<MazeNode> getAllNodes() {
+        return pq;
+    }
+
     /* TODO : Need to implement various logic to break ties */
     private boolean isGreater(int i, int j)
     {
         int fi = pq.get(i).getG() + pq.get(i).getH();
         int fj = pq.get(j).getG() + pq.get(j).getH();
-        return fi > fj;
+        if (fi > fj) {
+            return true;
+        } else if (fi == fj) {
+            return pq.get(i).getG() < pq.get(j).getG();
+        }
+        return false;
     }
     
     private void swap(int i, int j)
@@ -138,22 +147,22 @@ public class PriorityQueue {
 
         MazeNode n10 = new MazeNode('.', 1, 2);
         n10.setG(3);
-        n10.setH_temp(7);
+        n10.setHnew(7);
         pq.insert(n10);
 
         MazeNode n8 = new MazeNode('.', 2, 3);
         n8.setG(4);
-        n8.setH_temp(4);
+        n8.setHnew(4);
         pq.insert(n8);
 
         MazeNode n7 = new MazeNode('.', 3, 4);
         n7.setG(3);
-        n7.setH_temp(4);
+        n7.setHnew(4);
         pq.insert(n7);
 
         MazeNode n6 = new MazeNode('.', 4, 5);
         n6.setG(3);
-        n6.setH_temp(3);
+        n6.setHnew(3);
         pq.insert(n6);
 
 
@@ -164,7 +173,7 @@ public class PriorityQueue {
 
         MazeNode n1 = new MazeNode('.', 7, 6);
         n1.setG(0);
-        n1.setH_temp(1);
+        n1.setHnew(1);
         pq.insert(n1);
 
         tmp = pq.deleteMin();

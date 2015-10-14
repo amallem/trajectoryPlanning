@@ -1,11 +1,10 @@
 package utilities;
 
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Stack;
 
-import static utilities.Constants.FREE;
-import static utilities.Constants.NOT_VISITED;
-import static utilities.Constants.BLOCKED;
+import static utilities.Constants.*;
 
 /**
  * Created by anirudh on 10/3/15.
@@ -22,6 +21,21 @@ public class MazeBox {
         this.cols = col;
         initialize();
         generate();
+    }
+
+    public MazeBox(int num) {
+        maze = new MazeNode[num][num];
+        this.rows = num;
+        this.cols = num;
+        initialize();
+
+
+        maze[1][2].setVal(BLOCKED);
+        maze[2][3].setVal(BLOCKED);
+        maze[3][3].setVal(BLOCKED);
+        maze[4][3].setVal(BLOCKED);
+        maze[3][2].setVal(BLOCKED);
+        maze[2][2].setVal(BLOCKED);
     }
 
     public MazeNode[][] getMaze() {
@@ -101,12 +115,12 @@ public class MazeBox {
         return false;
     }
 
-    public void printMaze() {
+    public void printMaze(PrintWriter writer) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                System.out.print(maze[i][j].getVal() + " ");
+                writer.print(maze[i][j].getVal() + " ");
             }
-            System.out.println();
+            writer.println();
         }
     }
 

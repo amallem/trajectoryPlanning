@@ -22,6 +22,7 @@ public class RepeatedForwardAStar {
     private static PriorityQueue openList = new PriorityQueue();
     private static List<MazeNode> closedList = new ArrayList<MazeNode>();
     private static Stack<MazeNode> path = new Stack<MazeNode>();
+    public static int exploredNodes = 0;
 
     /* TODO: Dead-End logic not yet implemented */
     public static void search(MazeBox mazeBox, MazeNode start, MazeNode goal) {
@@ -36,7 +37,7 @@ public class RepeatedForwardAStar {
         while (!start.equals(goal)) {
             counter++;
             System.out.println("-------------------------------------------------");
-            mazeBox.printMaze();
+            //mazeBox.printMaze();
             discoverNeighbours(start);
             start.setG(0);
             start.setSearch(counter);
@@ -99,6 +100,7 @@ public class RepeatedForwardAStar {
     private static void computePath(MazeNode goal) {
         while (openList.getSize() > 0 && goal.getG() > openList.getMinFValue()) {
             MazeNode current = openList.deleteMin();
+            exploredNodes++;
             closedList.add(current);
             for (MazeNode neighbour : getNeighbours(current)) {
                 if (neighbour.getSearch() < counter) {

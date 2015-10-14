@@ -25,6 +25,7 @@ public class MazeNode {
     private int h;
     private MazeNode parent;
     private int search;
+    private boolean visited;
 
     public MazeNode(char val, int row, int col) {
         this.val = val;
@@ -33,12 +34,21 @@ public class MazeNode {
         this.cost = 1;
         this.parent = null;
         this.search = 0;
+        this.visited = false;
     }
 
     public boolean isBlocked() {
         if (val == BLOCKED)
             return true;
         return false;
+    }
+
+    public boolean isVisited() {
+        return this.visited;
+    }
+
+    public void setVisited(boolean value) {
+        this.visited = value;
     }
 
     public void setCost(int cost) {
@@ -74,7 +84,7 @@ public class MazeNode {
                 + Math.abs(goal.col - this.col);
     }
 
-    public void setH_temp(int h) {
+    public void setHnew(int h) {
         this.h = h;
     }
 
@@ -101,5 +111,8 @@ public class MazeNode {
         this.cost = 1;
         this.parent = null;
         this.search = 0;
+        this.g = 0;
+        this.h = 0;
+        this.visited = false;
     }
 }
