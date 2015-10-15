@@ -1,5 +1,6 @@
 package Algos;
 
+import static utilities.Constants.FREE;
 import static utilities.Constants.INFINITY;
 import static utilities.Constants.MOVE;
 
@@ -24,20 +25,22 @@ public class RepeatedForwardAStar {
     private static Stack<MazeNode> path = new Stack<MazeNode>();
     public static int exploredNodes = 0;
 
-    /* TODO: Dead-End logic not yet implemented */
-    public static void search(MazeBox mazeBox, MazeNode start, MazeNode goal) {
+    public static boolean search(MazeBox mazeBox, MazeNode start, MazeNode goal, int comparePolicy) {
         maze = mazeBox.getMaze();
+        openList.setComparePolicy(comparePolicy);
 
-        if (start.isBlocked() || goal.isBlocked()) {
-            System.out.println("Start/Goal given is a blocked cell");
-            return;
+        if (start.isBlocked()) {
+            start.setVal(FREE);
+        }
+
+        if (goal.isBlocked()) {
+            goal.setVal(FREE);
         }
 
         /* While start != goal */
         while (!start.equals(goal)) {
             counter++;
             System.out.println("-------------------------------------------------");
-            //mazeBox.printMaze();
             discoverNeighbours(start);
             start.setG(0);
             start.setSearch(counter);
@@ -48,15 +51,17 @@ public class RepeatedForwardAStar {
             start.setH(goal);
             openList.insert(start);
             computePath(goal);
+            exploredNodes += closedList.size();
             if (openList.getSize() == 0) {
                 System.out.println("Cannot reach target!!!!");
-                return;
+                return false;
             }
             retracePath(start, goal);
             start = moveAgent();
         }
 
         System.out.println("Reached Target!");
+        return true;
     }
 
     private static void discoverNeighbours(MazeNode start) {
@@ -100,8 +105,9 @@ public class RepeatedForwardAStar {
     private static void computePath(MazeNode goal) {
         while (openList.getSize() > 0 && goal.getG() > openList.getMinFValue()) {
             MazeNode current = openList.deleteMin();
-            exploredNodes++;
-            closedList.add(current);
+            if (!closedList.contains(current)) {
+                closedList.add(current);
+            }
             for (MazeNode neighbour : getNeighbours(current)) {
                 if (neighbour.getSearch() < counter) {
                     neighbour.setG(INFINITY);

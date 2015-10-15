@@ -15,4 +15,9 @@ public class Constants {
 
     public static final char NOT_VISITED = '*';
 
+    public static final int DEFAULT = 0;
+
+    public static final int GREATER_G = 1;
+
+    public static final int LESSER_G = 2;
 }

@@ -1,5 +1,6 @@
 package Algos;
 
+import static utilities.Constants.FREE;
 import static utilities.Constants.INFINITY;
 import static utilities.Constants.MOVE;
 
@@ -23,22 +24,24 @@ public class AdaptiveAStar {
     private static PriorityQueue openList = new PriorityQueue();
     private static List<MazeNode> closedList = new ArrayList<MazeNode>();
     private static Stack<MazeNode> path = new Stack<MazeNode>();
-    public static int exploredNodes = 0;
 
-    /* TODO: Dead-End logic not yet implemented */
-    public static void search(MazeBox mazeBox, MazeNode start, MazeNode goal) {
+
+    public static int search(MazeBox mazeBox, MazeNode start, MazeNode goal, int comparePolicy) {
         maze = mazeBox.getMaze();
+        openList.setComparePolicy(comparePolicy);
+        int exploredNodes = 0;
 
-        if (start.isBlocked() || goal.isBlocked()) {
-            System.out.println("Start/Goal given is a blocked cell");
-            return;
+        if (start.isBlocked()) {
+            start.setVal(FREE);
+        }
+
+        if (goal.isBlocked()) {
+            goal.setVal(FREE);
         }
 
         /* While start != goal */
         while (!start.equals(goal)) {
             counter++;
-            System.out.println("-------------------------------------------------");
-            //mazeBox.printMaze();
             discoverNeighbours(start);
             start.setG(0);
             start.setSearch(counter);
@@ -49,25 +52,24 @@ public class AdaptiveAStar {
             start.setH(goal);
             openList.insert(start);
             computePath(goal);
+            exploredNodes += closedList.size();
 
             if (openList.getSize() == 0) {
                 System.out.println("Cannot reach target!!!!");
-                return;
+                return exploredNodes;
             }
+            updateHnew(goal);
             retracePath(start, goal);
             start = moveAgent();
-            updateHnew(goal);
+
         }
 
         System.out.println("Reached Target!");
+        return exploredNodes;
     }
 
     private static void updateHnew(MazeNode goal) {
         for (MazeNode node : closedList) {
-            node.setHnew(goal.getG() - node.getG());
-            node.setVisited(true);
-        }
-        for (MazeNode node : openList.getAllNodes()) {
             node.setHnew(goal.getG() - node.getG());
             node.setVisited(true);
         }
@@ -114,8 +116,10 @@ public class AdaptiveAStar {
     private static void computePath(MazeNode goal) {
         while (openList.getSize() > 0 && goal.getG() > openList.getMinFValue()) {
             MazeNode current = openList.deleteMin();
-            exploredNodes++;
-            closedList.add(current);
+
+            if (!closedList.contains(current)) {
+                closedList.add(current);
+            }
             for (MazeNode neighbour : getNeighbours(current)) {
                 if (neighbour.getSearch() < counter) {
                     neighbour.setG(INFINITY);

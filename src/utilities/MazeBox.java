@@ -118,7 +118,7 @@ public class MazeBox {
     public void printMaze(PrintWriter writer) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                writer.print(maze[i][j].getVal() + " ");
+                writer.print(maze[i][j].getVal());
             }
             writer.println();
         }
@@ -133,4 +133,17 @@ public class MazeBox {
         return null;
     }
 
+    public MazeNode getRandomMazeNode() {
+        int rowPos = new Random().nextInt(rows);
+        int colPos = new Random().nextInt(cols);
+        return maze[rowPos][colPos];
+    }
+
+    public void setHvalues(MazeNode goal) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                maze[i][j].setH(goal);
+            }
+        }
+    }
 }

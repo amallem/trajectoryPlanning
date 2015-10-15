@@ -10,8 +10,9 @@ public class RepeatedBackwardAStar {
 
     public static int exploredNodes = 0;
 
-    public static void search(MazeBox mazeBox, MazeNode start, MazeNode goal) {
-        RepeatedForwardAStar.search(mazeBox, goal, start);
+    public static boolean search(MazeBox mazeBox, MazeNode start, MazeNode goal, int comparePolicy) {
+        boolean ans = RepeatedForwardAStar.search(mazeBox, goal, start, comparePolicy);
         exploredNodes = RepeatedForwardAStar.exploredNodes;
+        return ans;
     }
 }
